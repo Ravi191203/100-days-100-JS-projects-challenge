@@ -1,5 +1,23 @@
 <h1>100 Days, 100 JavaScript Projects Challenge</h1>
-    
+<table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Demo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>User Info Form with dynamic city selection</td>
+                <td>A simple digital clock displaying real-time</td>
+                <td><a href="#">Live Demo</a></td>
+            </tr>
+            <tr>
+            </tbody>
+    </table>
   <div class="section">
         <h2>Navigate to the Project Directory</h2>
         <pre><code>cd 100-days-100-JS-projects-challenge</code></pre>
