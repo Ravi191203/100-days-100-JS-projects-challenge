@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Information Form</title>
+  <title>Dynamic Country-City Selection</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -68,6 +68,75 @@
       </form>
     </div>
   </div>
-  <script src="app.js"></script>
+
+  <script>
+    // Mapping countries to their cities
+    const cityData = {
+      India: ["Mumbai", "Delhi", "Bangalore", "Chennai"],
+      USA: ["New York", "Los Angeles", "Chicago", "Houston"],
+      Australia: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+    };
+
+    // Elements
+    const countrySelect = document.getElementById("country");
+    const citySelect = document.getElementById("city");
+    const userForm = document.getElementById("userForm");
+
+    // Event listener to populate cities dynamically
+    countrySelect.addEventListener("change", (e) => {
+      const selectedCountry = e.target.value;
+
+      // Clear existing city options
+      citySelect.innerHTML = '<option value="" disabled selected>Select a city</option>';
+
+      // Populate new city options
+      if (selectedCountry && cityData[selectedCountry]) {
+        cityData[selectedCountry].forEach((city) => {
+          const option = document.createElement("option");
+          option.value = city;
+          option.textContent = city;
+          citySelect.appendChild(option);
+        });
+      } else {
+        console.error("No cities available for the selected country.");
+      }
+    });
+
+    // Form submission handler
+    userForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Get form values
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const country = countrySelect.value;
+      const city = citySelect.value;
+
+      // Validate the form
+      if (!name || !email || !country || !city) {
+        alert("Please fill out all fields before submitting the form.");
+        return;
+      }
+
+      // Display user information in an alert box
+      alert(
+        `User Information Submitted Successfully:\n\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nCity: ${city}`
+      );
+
+      // Log information in the console
+      console.group("User Information");
+      console.log("Name:", name);
+      console.log("Email:", email);
+      console.log("Country:", country);
+      console.log("City:", city);
+      console.groupEnd();
+
+      // Clear the form after submission
+      userForm.reset();
+
+      // Reset city dropdown
+      citySelect.innerHTML = '<option value="" disabled selected>Select a city</option>';
+    });
+  </script>
 </body>
 </html>
