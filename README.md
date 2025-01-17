@@ -54,7 +54,7 @@
         <h2>📧 Contact</h2>
         <p>For questions or feedback, you can reach me at:</p>
         <ul>
-            <li><strong>Email:</strong> <a href="mailto:ravi191203@example.com">ravi191203@example.com</a></li>
-            <li><strong>LinkedIn:</strong> <a href="#">Ravi's LinkedIn Profile</a></li>
+            <li><strong>Email:</strong> <a href="mailto:raviraghavendrags@gmail.com">rrgs_dev</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ravi-raghavendra-g-s-8188452a9/">Ravi's LinkedIn Profile</a></li>
         </ul>
     </div>
