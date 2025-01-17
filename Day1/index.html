@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="theme-color" content="#ff6600">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../rrgs_dev-logo.png">
   <title>Dynamic Country-City Selection</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(to bottom right, #007bff, #6610f2);
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .form-container {
       max-width: 500px;
-      background: #fff;
+      background: #f071ac;
       color: #333;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -21,7 +22,7 @@
       padding: 20px;
     }
     .form-container h1 {
-      color: #6610f2;
+      color: #ffffff;
       font-size: 2rem;
       font-weight: bold;
       text-align: center;
@@ -68,7 +69,28 @@
       </form>
     </div>
   </div>
-
+  <div id="footer-placeholder"></div>
+  <script>
+    // Dynamically load the footer from footer.html
+    document.addEventListener("DOMContentLoaded", function () {
+      const footerPlaceholder = document.getElementById("footer-placeholder");
+  
+      fetch("../footer.html")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to load footer");
+          }
+          return response.text();
+        })
+        .then((html) => {
+          footerPlaceholder.innerHTML = html;
+        })
+        .catch((error) => {
+          console.error("Error loading footer:", error);
+        });
+    });
+  </script>
+  
   <script>
     // Mapping countries to their cities
     const cityData = {
