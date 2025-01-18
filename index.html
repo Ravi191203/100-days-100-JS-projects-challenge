@@ -1,42 +1,474 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100 Days 100 JS Projects</title>
+    <title>100 Days of JavaScript Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #818cf8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --success: #22c55e;
+            --warning: #eab308;
+            --error: #ef4444;
         }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
+
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        li {
-            margin: 10px 0;
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
         }
-        a {
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 2rem auto;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-input {
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .filter-dropdown {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .view-toggle button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-toggle button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .project-number {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-tag {
+            background: #f1f5f9;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .difficulty[data-level="easy"] { color: var(--success); }
+        .difficulty[data-level="medium"] { color: var(--warning); }
+        .difficulty[data-level="hard"] { color: var(--error); }
+
+        .project-link {
             text-decoration: none;
-            color: #007bff;
+            color: inherit;
+            display: block;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-icon {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-completed { background: var(--success); }
+        .status-upcoming { background: var(--text-secondary); }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-bar {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>100 Days 100 JS Projects</h1>
-    <p>Click on a project to view it:</p>
-    <ul>
-        <li><a href="Day1/index.html">Day 1: User Info Form</a></li>
-        <li><a href="Day2/index.html">Day 2: Ultimate Quiz Challenge</a></li>
-        <!-- Add more days as you complete projects -->
-    </ul>
-</body>
-</html>
+    <div class="container">
+        <div class="header">
+            <h1>100 Days of JavaScript</h1>
+            <p>Building one project every day to master JavaScript</p>
+
+            <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Projects Complete</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">97</div>
+                <div class="stat-label">Days Remaining</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.5</div>
+                <div class="stat-label">Avg. Difficulty</div>
+            </div></div>
+                    <div class="stat-label">Projects Complete</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">98</div>
+                    <div class="stat-label">Days Remaining</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4.5</div>
+                    <div class="stat-label">Avg. Difficulty</div>
+                </div>
+            </div>
+        
+
+        <div class="controls">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search projects..." id="searchInput">
+            </div>
+            
+            <select class="filter-dropdown" id="difficultyFilter">
+                <option value="all">All Difficulties</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <select class="filter-dropdown" id="techFilter">
+                <option value="all">All Technologies</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="javascript">JavaScript</option>
+                <option value="api">API</option>
+            </select>
+
+            <div class="view-toggle">
+                <button class="active" data-view="grid">
+                    <i class="fas fa-grid-2"></i> Grid
+                </button>
+                <button data-view="list">
+                    <i class="fas fa-list"></i> List
+                </button>
+            </div>
+        </div>
+
+        <div class="projects-grid" id="projectsContainer">
+            <a href="Day1/index.html" class="project-link">
+                <div class="project-card">
+                    <div class="project-number">Day 01</div>
+                    <div class="project-title">User Info Form</div>
+                    <div class="project-meta">
+                        <span class="meta-tag difficulty" data-level="easy">
+                            <i class="fas fa-star"></i> Easy
+                        </span>
+                        <span class="meta-tag"><i class="fab fa-html5"></i> HTML</span>
+                        <span class="meta-tag"><i class="fab fa-css3"></i> CSS</span>
+                        <span class="meta-tag"><i class="fab fa-js"></i> JavaScript</span>
+                    </div>
+                    <div class="project-description">
+                        Interactive form with real-time validation and dynamic feedback
+                    </div>
+                    <div class="project-status">
+                        <div class="status-icon status-completed"></div>
+                        Completed
+                    </div>
+                </div>
+            </a>
+
+            
+<a href="Day2/index.html" class="project-link">
+    <div class="project-card">
+        <div class="project-number">Day 02</div>
+        <div class="project-title">Ultimate Quiz Challenge</div>
+        <div class="project-meta">
+            <span class="meta-tag difficulty" data-level="easy">
+                <i class="fas fa-star"></i> Easy
+            </span>
+            <span class="meta-tag"><i class="fab fa-html5"></i> HTML</span><span class="meta-tag"><i class="fab fa-css3"></i> CSS</span><span class="meta-tag"><i class="fab fa-js"></i> JavaScript</span>
+        </div>
+        <div class="project-description">
+            Dynamic quiz app with multiple categories and scoring system
+        </div>
+        <div class="project-status">
+            <div class="status-icon status-completed"></div>
+            Completed
+        </div>
+    </div>
+</a>
+
+            
+<a href="Day3/index.html" class="project-link">
+    <div class="project-card">
+        <div class="project-number">Day 03</div>
+        <div class="project-title">Priority Planner</div>
+        <div class="project-meta">
+            <span class="meta-tag difficulty" data-level="easy">
+                <i class="fas fa-star"></i> Easy
+            </span>
+            <span class="meta-tag"><i class="fab fa-html5"></i> HTML</span><span class="meta-tag"><i class="fab fa-css3"></i> CSS</span><span class="meta-tag"><i class="fab fa-js"></i> JavaScript</span>
+        </div>
+        <div class="project-description">
+            The Priority Planner is a seek and user-friendly task management app designed to boost productivity and help you stay organized.
+        </div>
+        <div class="project-status">
+            <div class="status-icon status-completed"></div>
+            Completed
+        </div>
+    </div>
+</a>
+    <!-- Template for upcoming projects -->
+            <div class="project-card" style="opacity: 0.5">
+                <div class="project-number">Day 04</div>
+                <div class="project-title">Loading..stay tuned</div>
+                <div class="project-meta">
+                    <span class="meta-tag easy" data-level="hard">
+                        <i class="fas fa-star"></i> Easy
+                    </span>
+                    <span class="meta-tag"><i class="fab fa-js"></i> JavaScript</span>
+                </div>
+                <div class="project-description">
+                    Coming soon...
+                </div>
+                <div class="project-status">
+                    <div class="status-icon status-upcoming"></div>
+                    Upcoming
+                </div>
+            </div>
+        </div>
+    
+
+    <script>
+        // Search and filter functionality
+        const searchInput = document.getElementById('searchInput');
+        const difficultyFilter = document.getElementById('difficultyFilter');
+        const techFilter = document.getElementById('techFilter');
+        const projectsContainer = document.getElementById('projectsContainer');
+        const viewToggleButtons = document.querySelectorAll('.view-toggle button');
+
+        function filterProjects() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const difficultyValue = difficultyFilter.value;
+            const techValue = techFilter.value;
+
+            const projects = projectsContainer.getElementsByClassName('project-card');
+
+            Array.from(projects).forEach(card => {
+                const title = card.querySelector('.project-title').textContent.toLowerCase();
+                const number = card.querySelector('.project-number').textContent.toLowerCase();
+                const difficulty = card.querySelector('.difficulty')?.dataset.level || '';
+                const techs = Array.from(card.querySelectorAll('.meta-tag')).map(tag => tag.textContent.toLowerCase());
+
+                const matchesSearch = title.includes(searchTerm) || number.includes(searchTerm);
+                const matchesDifficulty = difficultyValue === 'all' || difficulty === difficultyValue;
+                const matchesTech = techValue === 'all' || techs.some(tech => tech.includes(techValue));
+
+                const parentElement = card.parentElement.tagName === 'A' ? card.parentElement : card;
+                parentElement.style.display = (matchesSearch && matchesDifficulty && matchesTech) ? '' : 'none';
+            });
+        }
+
+        // View toggle functionality
+        viewToggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const view = button.dataset.view;
+                
+                // Update active button
+                viewToggleButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Update container class
+                projectsContainer.className = view === 'grid' ? 'projects-grid' : 'projects-list';
+            });
+        });
+
+        // Event listeners
+        searchInput.addEventListener('input', filterProjects);
+        difficultyFilter.addEventListener('change', filterProjects);
+        techFilter.addEventListener('change', filterProjects);
+    </script>
+
+</body></html>
