@@ -22,7 +22,7 @@
                 <td><a href="https://100-days-100-js-projects-challenge.pages.dev/">Live Demo</a></td>
             </tr>
                  <tr>
-                <td>1</td>
+                <td>3</td>
                 <td>Priority Planner</td>
                 <td>Like Todo app with Some Outstanding UI</td>
                 <td><a href="https://100-days-100-js-projects-challenge.pages.dev/">Live Demo</a></td>
