@@ -12,10 +12,21 @@
             <tr>
                 <td>1</td>
                 <td>User Info Form with dynamic city selection</td>
-                <td>A simple digital clock displaying real-time</td>
+                <td>User Form</td>
                 <td><a href="https://100-days-100-js-projects-challenge.pages.dev/">Live Demo</a></td>
             </tr>
-            <tr>
+             <tr>
+                <td>2</td>
+                <td>Ultimate Quiz Challenge</td>
+                <td>Quiz Application With Various Features</td>
+                <td><a href="https://100-days-100-js-projects-challenge.pages.dev/">Live Demo</a></td>
+            </tr>
+                 <tr>
+                <td>3</td>
+                <td>Priority Planner</td>
+                <td>Like Todo app with Some Outstanding UI</td>
+                <td><a href="https://100-days-100-js-projects-challenge.pages.dev/">Live Demo</a></td>
+            </tr>
             </tbody>
     </table>
   <div class="section">
