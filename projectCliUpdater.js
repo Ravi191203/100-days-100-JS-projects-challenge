@@ -16,7 +16,7 @@ const question = (query) => new Promise((resolve) => rl.question(query, resolve)
 // Available technology options
 const AVAILABLE_TECHNOLOGIES = [
     'HTML', 'CSS', 'JavaScript', 'API', 'React', 
-    'Node.js', 'Python', 'Database', 'Vue', 'TypeScript'
+    'Node.js', 'Python', 'Database', 'Vue', 'Bootstrap'
 ];
 
 // Project difficulty levels
@@ -151,7 +151,7 @@ function generateProjectCard(project) {
         'Python': '<i class="fab fa-python"></i> Python',
         'Database': '<i class="fas fa-database"></i> Database',
         'Vue': '<i class="fab fa-vuejs"></i> Vue',
-        'TypeScript': '<i class="fab fa-js"></i> TypeScript'
+        'Bootstrap': '<i class="fab fa-bootstrap"></i> Bootstrap'
     };
 
     const formattedDay = project.dayNumber.toString().padStart(2, '0');
