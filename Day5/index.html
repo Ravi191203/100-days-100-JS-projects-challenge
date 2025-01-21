@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../rrgs_dev-logo.png">
+    <title>Enhanced BMI Calculator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --success-color: #4CAF50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --info-color: #2196F3;
+        }
+
+        body {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #212529;
+            color: #e9ecef;
+        }
+
+        .dark-mode .card {
+            background-color: #343a40;
+            border-color: #495057;
+        }
+
+        .dark-mode .form-control {
+            background-color: #495057;
+            border-color: #6c757d;
+            color: #e9ecef;
+        }
+
+        .dark-mode .nav-tabs .nav-link {
+            color: #e9ecef;
+        }
+
+        .dark-mode .nav-tabs .nav-link.active {
+            background-color: #343a40;
+            border-color: #495057;
+            color: var(--primary-color);
+        }
+
+        .result-card {
+            transition: all 0.3s ease;
+        }
+
+        .bmi-value {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .bmi-category {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-underweight { color: var(--info-color); }
+        .category-normal { color: var(--success-color); }
+        .category-overweight { color: var(--warning-color); }
+        .category-obese { color: var(--danger-color); }
+
+        .tips-card {
+            border-left: 4px solid var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .chart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            height: 300px;
+        }
+
+        .input-group-text {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .custom-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .custom-tooltip .tooltip-text {
+            visibility: hidden;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .custom-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <header class="text-center mb-4">
+            <h1 class="display-5 fw-bold">Enhanced BMI Calculator</h1>
+            <p class="lead">Calculate, track, and understand your Body Mass Index</p>
+            <div class="btn-group">
+                <button id="theme-toggle" class="btn btn-outline-primary">
+                    <span id="theme-icon">🌙</span> Toggle Theme
+                </button>
+                <button id="clear-history" class="btn btn-outline-danger">
+                    Clear History
+                </button>
+            </div>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="unitTabs">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="metric-tab" data-bs-toggle="tab" data-bs-target="#metric">
+                                    Metric (kg, cm)
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="imperial-tab" data-bs-toggle="tab" data-bs-target="#imperial">
+                                    Imperial (lbs, in)
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="metric">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Weight</span>
+                                        <input type="number" id="metric-weight" class="form-control" placeholder="Enter weight" step="0.1">
+                                        <span class="input-group-text">kg</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Height</span>
+                                        <input type="number" id="metric-height" class="form-control" placeholder="Enter height" step="0.1">
+                                        <span class="input-group-text">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="imperial">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Weight</span>
+                                        <input type="number" id="imperial-weight" class="form-control" placeholder="Enter weight" step="0.1">
+                                        <span class="input-group-text">lbs</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Height</span>
+                                        <input type="number" id="imperial-height" class="form-control" placeholder="Enter height" step="0.1">
+                                        <span class="input-group-text">in</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="calculate-btn" class="btn btn-primary w-100 mt-3">Calculate BMI</button>
+                    </div>
+                </div>
+
+                <div id="results-section" class="card shadow-sm mt-4" style="display: none;">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">Your Results</h3>
+                        <div class="bmi-value" id="bmi-result"></div>
+                        <div class="bmi-category" id="bmi-category"></div>
+                        <div class="progress mb-4">
+                            <div id="bmi-progress" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="tips-card p-3" id="bmi-tips"></div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h3>BMI History</h3>
+                        <div class="chart-container">
+                            <canvas id="bmi-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const state = {
+            bmiHistory: JSON.parse(localStorage.getItem('bmiHistory')) || [],
+            chart: null,
+            isDarkMode: localStorage.getItem('darkMode') === 'true'
+        };
+
+        // DOM Elements
+        const elements = {
+            themeToggle: document.getElementById('theme-toggle'),
+            themeIcon: document.getElementById('theme-icon'),
+            clearHistory: document.getElementById('clear-history'),
+            calculateBtn: document.getElementById('calculate-btn'),
+            resultsSection: document.getElementById('results-section'),
+            bmiResult: document.getElementById('bmi-result'),
+            bmiCategory: document.getElementById('bmi-category'),
+            bmiProgress: document.getElementById('bmi-progress'),
+            bmiTips: document.getElementById('bmi-tips'),
+            metricTab: document.getElementById('metric-tab'),
+            inputs: {
+                metricWeight: document.getElementById('metric-weight'),
+                metricHeight: document.getElementById('metric-height'),
+                imperialWeight: document.getElementById('imperial-weight'),
+                imperialHeight: document.getElementById('imperial-height')
+            }
+        };
+
+        // BMI Categories and their ranges
+        const BMI_CATEGORIES = {
+            underweight: { max: 18.5, color: 'var(--info-color)', tips: 'Consider consulting a healthcare provider about healthy weight gain strategies.' },
+            normal: { max: 24.9, color: 'var(--success-color)', tips: 'Maintain your healthy lifestyle with balanced diet and regular exercise.' },
+            overweight: { max: 29.9, color: 'var(--warning-color)', tips: 'Focus on portion control and increasing physical activity.' },
+            obese: { max: Infinity, color: 'var(--danger-color)', tips: 'Consider consulting a healthcare provider for personalized advice.' }
+        };
+
+        // Initialize Chart
+        function initializeChart() {
+            const ctx = document.getElementById('bmi-chart').getContext('2d');
+            state.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: state.bmiHistory.map((_, i) => `Entry ${i + 1}`),
+                    datasets: [{
+                        label: 'BMI Progress',
+                        data: state.bmiHistory,
+                        borderColor: 'var(--primary-color)',
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            suggestedMin: 15,
+                            suggestedMax: 35
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calculate BMI
+        function calculateBMI() {
+            const isMetric = elements.metricTab.classList.contains('active');
+            let weight, height;
+
+            if (isMetric) {
+                weight = parseFloat(elements.inputs.metricWeight.value);
+                height = parseFloat(elements.inputs.metricHeight.value) / 100;
+            } else {
+                weight = parseFloat(elements.inputs.imperialWeight.value) * 0.453592;
+                height = parseFloat(elements.inputs.imperialHeight.value) * 0.0254;
+            }
+
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                alert('Please enter valid values!');
+                return;
+            }
+
+            const bmi = (weight / (height * height));
+            updateResults(bmi);
+            updateHistory(bmi);
+        }
+
+        // Update Results
+        function updateResults(bmi) {
+            const roundedBMI = bmi.toFixed(1);
+            let category, color;
+
+            for (const [cat, details] of Object.entries(BMI_CATEGORIES)) {
+                if (bmi < details.max) {
+                    category = cat;
+                    color = details.color;
+                    elements.bmiTips.textContent = details.tips;
+                    break;
+                }
+            }
+
+            elements.resultsSection.style.display = 'block';
+            elements.bmiResult.textContent = roundedBMI;
+            elements.bmiCategory.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            elements.bmiCategory.className = `bmi-category category-${category}`;
+            
+            const progress = Math.min(Math.max((bmi - 15) / (35 - 15) * 100, 0), 100);
+            elements.bmiProgress.style.width = `${progress}%`;
+            elements.bmiProgress.style.backgroundColor = color;
+        }
+
+        // Update History
+        function updateHistory(bmi) {
+            state.bmiHistory.push(parseFloat(bmi.toFixed(1)));
+            localStorage.setItem('bmiHistory', JSON.stringify(state.bmiHistory));
+            
+            if (state.chart) {
+                state.chart.data.labels = state.bmiHistory.map((_, i) => `Entry ${i + 1}`);
+                state.chart.data.datasets[0].data = state.bmiHistory;
+                state.chart.update();
+            }
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            state.isDarkMode = !state.isDarkMode;
+            elements.themeIcon.textContent = state.isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', state.isDarkMode);
+        }
+
+        // Clear History
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear your BMI history?')) {
+                state.bmiHistory = [];
+                localStorage.removeItem('bmiHistory');
+                state.chart.data.labels = [];
+                state.chart.data.datasets[0].data = [];
+                state.chart.update();
+            }
+        }
+
+        // Event Listeners
+        elements.calculateBtn.addEventListener('click', calculateBMI);
+        elements.themeToggle.addEventListener('click', toggleTheme);
+        elements.clearHistory.addEventListener('click', clearHistory);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeChart();
+            if (state.isDarkMode) {
+                document.body.classList.add('dark-mode');
+                elements.themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+</html>
