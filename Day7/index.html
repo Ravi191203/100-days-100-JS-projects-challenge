@@ -38,7 +38,8 @@
             transition: all 0.3s ease;
         }
         .item-row:hover {
-            background-color: #f1f3f5;
+            background-color: #141414;
+            border-radius: 10%;
         }
     </style>
 </head>
@@ -55,7 +56,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Business Name</label>
-                            <input type="text" class="form-control bg-danger" id="businessName" placeholder="Enter Business Name">
+                            <input type="text" class="form-control" id="businessName" placeholder="Enter Business Name">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Invoice Number</label>
@@ -67,7 +68,7 @@
                         <div class="card-header bg-success ">
                             <h5 class="mb-0">Bill Items</h5>
                         </div>
-                        <div class="card-body" id="itemContainer">
+                        <div class="card-body bg-info" id="itemContainer">
                             <div class="row item-row mb-2 p-2">
                                 <div class="col-md-5">
                                     <input type="text" class="form-control" placeholder="Item Name" required>
