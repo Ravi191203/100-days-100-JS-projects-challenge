@@ -13,6 +13,9 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        body{
+            background: linear-gradient(to right, #eca7a7, #a8a8f0);
+        }
         :root {
             --primary-color: #4f46e5;
             --secondary-color: #818cf8;
@@ -33,7 +36,6 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-color);
             color: var(--text-primary);
             line-height: 1.6;
         }
@@ -48,9 +50,8 @@
             text-align: center;
             margin-bottom: 3rem;
             padding: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 20px;
-            color: white;
+            
             box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
         }
 
@@ -291,7 +292,17 @@
 
             <div class="stats-container">
             <div class="stat-card">
-                <div class="stat-value">6</div>
+                <div class="stat-value">7</div>
+                <div class="stat-label">Projects Complete</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">93</div>
+                <div class="stat-label">Days Remaining</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.5</div>
+                <div class="stat-label">Avg. Difficulty</div>
+            </div></div>
                 <div class="stat-label">Projects Complete</div>
             </div>
             <div class="stat-card">
@@ -461,6 +472,26 @@
         </div>
         <div class="project-description">
             I’ve created an Advanced Countdown Timer as part of my 100 Days, 100 JS Projects challenge! 🎉
+        </div>
+        <div class="project-status">
+            <div class="status-icon status-completed"></div>
+            Completed
+        </div>
+    </div>
+</a>
+    
+<a href="Day07/index.html" class="project-link">
+    <div class="project-card">
+        <div class="project-number">Day 07</div>
+        <div class="project-title">Simple Bill Generator 💰🧾</div>
+        <div class="project-meta">
+            <span class="meta-tag difficulty" data-level="easy">
+                <i class="fas fa-star"></i> Easy
+            </span>
+            <span class="meta-tag"><i class="fab fa-html5"></i> HTML</span><span class="meta-tag"><i class="fab fa-css3"></i> CSS</span><span class="meta-tag"><i class="fab fa-js"></i> JavaScript</span><span class="meta-tag"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+        </div>
+        <div class="project-description">
+            A responsive billing tool with real-time calculations, tax support, and printable receipts."
         </div>
         <div class="project-status">
             <div class="status-icon status-completed"></div>
